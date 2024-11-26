@@ -1,0 +1,222 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+@font-face {
+    font-family: Mulish;
+    src: url("fonts/Mulish-Regular.ttf") format("truetype");
+}
+
+body{
+    background: #ffffff;
+}
+
+a{
+    text-decoration: none;
+}
+
+li{
+    list-style: none;
+}
+
+header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 80px;
+    background: red;
+    color: white;
+}
+
+
+header a{
+    margin-left: 10px;
+    color: white;
+    font-size: 20px;
+}
+
+.logo{
+    font-size: 40px;
+    margin-left: 400%;
+}
+
+header button{
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 20px;
+    margin-left: 15px;
+    cursor: pointer;
+    font-family: Mulish;
+}
+
+.header-link{
+    display: flex;
+}
+
+
+header a:hover, header button :hover{
+    color: #919191;
+}
+
+main {
+    padding: 20px;
+}
+
+
+main p{
+    font-size: 25px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin: 20px;
+}
+
+.form-control {
+
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.form-group{
+    display: flex;
+    flex-direction: column;
+}
+
+.btn {
+    background-color: #000000;
+    color: white;
+    border: none;
+    padding: 15px 50px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #a7a7a7;
+}
+
+.error-messages {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.error-messages {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.form-group__checkbox{
+    display: flex;
+    font-size: 12px;
+}
+
+.form-group__checkbox:hover{
+    color: #919191;
+
+}
+#id_consent{
+    width: 20px;
+}
+
+.profile-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.filter{
+    align-self: flex-end;
+    display: flex;
+    gap: 10px;
+}
+
+select:hover {
+    border-color: #999;
+}
+
+select:focus {
+    border-color: #333;
+}
+
+select option {
+    color: #999; /
+}
+
+select::after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.requests{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.request{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    margin-top: 30px;
+}
+
+
+.request h3{
+    font-size: 30px;
+}
+
+.request p{
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.form-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#file_upload_button{
+    background-color: #000000;
+    border: none;
+}
+
+.avatar{
+    width: 25%;
+}
+.profile{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.create textarea{
+    width: 80%;
+}
+
+.create input{
+    width: 80%;
+}
+.create select{
+    width: 80%;
+}
+
+
+
+

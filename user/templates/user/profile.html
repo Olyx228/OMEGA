@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Ваш профиль</h1>
+<main class="profile">
+
+
+    <div class="profile-form form avatar">
+        <h2>Ваш аватар</h2>
+
+        {% if user.profile and user.profile.avatar %}
+            <img class="rounded-circle" src="{{ user.profile.avatar.url }}" alt="Аватар" width="150" height="150">
+        {% else %}
+            <img src="{% static 'avatars/default.png' %}" alt="Аватар по умолчанию" width="150" height="150">
+        {% endif %}
+
+        <form class="form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ profile_form.avatar }}
+            <button class="btn btn-primary" type="submit" >Обновить аватар</button>
+        </form>
+    </div>
+
+    <div class="requests " >
+        <h2>Ваши заявки</h2>
+        <a href="{% url 'create_request' %}">Создать заявку</a>
+        {% if user_requests %}
+    <ul class="request">
+    {% for request in user_requests %}
+            <li >
+                <h3>{{ request.title }}</h3>
+                <p>{{ request.description }}</p>
+                <p>Категория: {{ request.category.name }}</p>
+                <p>Статус: {{ request.get_status_display }}</p>
+                <p>Создано: {{ request.created_at }}</p>
+
+                {% if request.status == 'new' %}
+                    <form class="form" method="post" action="{% url 'delete_request' request.id %}" onsubmit="return confirm('Вы уверены, что хотите удалить эту заявку?');">
+                        {% csrf_token %}
+                        <button class="btn btn-danger btn-red" type="submit" class="btn">Удалить заявку</button>
+                    </form>
+
+                {% endif %}
+                </li>
+            {% endfor %}
+            </ul>
+            {% else %}
+                <p>У вас пока нет заявок.</p>
+    {% endif %}
+    </div>
+</main>
+
+
+{% endblock %}

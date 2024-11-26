@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <main class="container">
+
+        <h2>Главная</h2>
+<h1>Опрос: Какой ваш любимый цвет?</h1>
+
+<form id="poll-form" enctype="multipart/form-data">
+  <input type="file" id="image-upload" name="image" accept="image/*"> <br><br>
+
+  <input type="radio" id="red" name="color" value="red">
+  <label for="red">Красный</label><br>
+
+  <input type="radio" id="green" name="color" value="green">
+  <label for="green">Зеленый</label><br>
+
+  <input type="radio" id="blue" name="color" value="blue">
+  <label for="blue">Синий</label><br><br>
+
+  <button type="button" id="vote-button">Проголосовать</button>
+</form>
+
+<div id="results" style="display: none;">
+  <h2>Результаты:</h2>
+  <p>Красный: <span id="red-result">0%</span></p>
+  <p>Зеленый: <span id="green-result">0%</span></p>
+  <p>Синий: <span id="blue-result">0%</span></p>
+  <p>Победитель: <span id="winner"></span></p>
+  <img id="uploaded-image" src="" alt="Загруженное изображение" style="max-width: 300px; display: none;">
+</div>
+
+<div id="timer">Время до окончания опроса: <span id="time-left">10</span> секунд</div>
+
+<script>
+  const form = document.getElementById('poll-form');
+  const resultsDiv = document.getElementById('results');
+  const redResult = document.getElementById('red-result');
+  const greenResult = document.getElementById('green-result');
+  const blueResult = document.getElementById('blue-result');
+  const winnerSpan = document.getElementById('winner');
+  const timerSpan = document.getElementById('time-left');
+  let hasVoted = false;
+
+
+  const voteButton = document.getElementById('vote-button');
+  voteButton.addEventListener('click', () => {
+    if (hasVoted) {
+      alert('Вы уже проголосовали!');
+      return;
+    }
+    hasVoted = true;
+
+    const results = generateRandomResults();
+    redResult.textContent = results.red + '%';
+    greenResult.textContent = results.green + '%';
+    blueResult.textContent = results.blue + '%';
+    winnerSpan.textContent = getWinner(results);
+    resultsDiv.style.display = 'block';
+    form.style.display = 'none';
+
+    const fileInput = document.getElementById('image-upload');
+    const uploadedImage = document.getElementById('uploaded-image'); // Перемещено сюда
+
+    if (fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      uploadedImage.src = "requests_photos/1_1_sovremenniy.jpg";
+      uploadedImage.style.display = 'block';
+    } else {
+      console.log('Файл не выбран.');
+    }
+  });
+
+  function generateRandomResults() {
+    let total = 0;
+    const red = Math.floor(Math.random() * 100);
+    total += red;
+    const green = Math.floor(Math.random() * (100 - total));
+    total += green;
+    const blue = 100 - total;
+    return { red, green, blue };
+  }
+
+  function getWinner(results) {
+    if (results.red > results.green && results.red > results.blue) {
+      return 'Красный';
+    } else if (results.green > results.red && results.green > results.blue) {
+      return 'Зеленый';
+    } else {
+      return 'Синий';
+    }
+  }
+
+  let timeLeft = 10;
+  const timerInterval = setInterval(() => {
+    timerSpan.textContent = timeLeft;
+    timeLeft--;
+    if (timeLeft < 0) {
+      clearInterval(timerInterval);
+      form.style.display = 'none';
+    }
+  }, 1000);
+</script>
+
+        {% if user.is_authenticated %}
+            <p>Здарвсвтуй {{ user.username }}!</p>
+        {% if completed_requests %}
+        <ul class="request nav">
+            {% for request in completed_requests %}
+                <li class="nav-item">
+                    <h3>{{ request.title }}</h3>
+                    <p class="nav-link link-dark">Категория: {{ request.category.name }}</p>
+                    <p class="nav-link link-dark">Создано: {{ request.created_at }}</p>
+                    {% if request.photo %}
+                        <img class="img-thumbnail"  src="{{ request.photo.url }}" alt="{{ request.title }}" style="max-width: 500px; max-height: 300px;" />
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Нет заявок.</p>
+    {% endif %}
+
+        {% else %}
+            <p>Здарвсвтуй гость o_0</p>
+        {% endif %}
+    </main>
+{% endblock %}
